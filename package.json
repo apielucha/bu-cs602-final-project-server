@@ -4,6 +4,7 @@
   "description": "NodeJS server for Boston University CS602 (Server-side development) final project.",
   "main": "app.js",
   "scripts": {
+    "dev": "nodemon app.js",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/apielucha/bu-cs602-final-project-server/issues"
   },
-  "homepage": "https://github.com/apielucha/bu-cs602-final-project-server#readme"
+  "homepage": "https://github.com/apielucha/bu-cs602-final-project-server#readme",
+  "devDependencies": {
+    "nodemon": "^1.15.1"
+  }
 }
