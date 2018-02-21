@@ -1,0 +1,25 @@
+{
+  "name": "bu-cs602-final-project-server",
+  "version": "1.0.0",
+  "description": "NodeJS server for Boston University CS602 (Server-side development) final project.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/apielucha/bu-cs602-final-project-server.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "server"
+  ],
+  "author": "Alexandre Pielucha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/apielucha/bu-cs602-final-project-server/issues"
+  },
+  "homepage": "https://github.com/apielucha/bu-cs602-final-project-server#readme"
+}
