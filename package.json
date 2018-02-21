@@ -4,8 +4,9 @@
   "description": "NodeJS server for Boston University CS602 (Server-side development) final project.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js",
+    "dev": "./node_modules/.bin/nodemon ./app.js",
+    "lint": "./node_modules/.bin/eslint ./**/*.js",
+    "start": "node ./app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +25,12 @@
   },
   "homepage": "https://github.com/apielucha/bu-cs602-final-project-server#readme",
   "devDependencies": {
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
     "nodemon": "^1.15.1"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base"
   }
 }
