@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+import path from 'path';
+
 import Server from './http/server';
 
 class App {
@@ -11,6 +13,7 @@ class App {
 
   static _init() {
     dotenv.config();
+    process.env.ROOT_DIR = path.join(__dirname, '/../');
   }
 }
 

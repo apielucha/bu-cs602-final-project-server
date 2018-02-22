@@ -2,6 +2,8 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import morgan from 'morgan';
 
+import AuthController from './controllers/auth';
+
 class Server {
   constructor(port) {
     this._app = express();
@@ -18,9 +20,10 @@ class Server {
   }
 
   _routes() {
-    this._app.get('/', (req, res) => {
-      res.end('Welcome to my awesome website!');
-    });
+    this._app.get('/login', AuthController.index);
+    this._app.post('/login', AuthController.login);
+
+    this._app.get('/', (req, res) => { res.end('homepage'); });
   }
 
   run() {
