@@ -2,7 +2,7 @@
   "name": "bu-cs602-final-project-server",
   "version": "1.0.0",
   "description": "NodeJS server for Boston University CS602 (Server-side development) final project.",
-  "main": "src/app.mjs",
+  "main": "src/app.js",
   "scripts": {
     "build": "./bin/build",
     "dev": "./bin/dev",
@@ -26,7 +26,10 @@
   },
   "homepage": "https://github.com/apielucha/bu-cs602-final-project-server#readme",
   "dependencies": {
-    "dotenv": "^5.0.0"
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "morgan": "^1.9.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -46,6 +49,11 @@
     ]
   },
   "eslintConfig": {
-    "extends": "airbnb-base"
+    "extends": "airbnb-base",
+    "rules": {
+      "no-underscore-dangle": [
+        "off"
+      ]
+    }
   }
 }
