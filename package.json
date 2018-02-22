@@ -2,12 +2,13 @@
   "name": "bu-cs602-final-project-server",
   "version": "1.0.0",
   "description": "NodeJS server for Boston University CS602 (Server-side development) final project.",
-  "main": "app.js",
+  "main": "src/app.mjs",
   "scripts": {
-    "dev": "./node_modules/.bin/nodemon ./app.js",
-    "lint": "./node_modules/.bin/eslint ./**/*.js",
-    "start": "node ./app.js",
-    "test": "./node_modules/.bin/mocha ./tests/**/*.js"
+    "build": "./bin/build",
+    "dev": "./bin/dev",
+    "lint": "./bin/lint",
+    "start": "./bin/start",
+    "test": "./bin/test"
   },
   "repository": {
     "type": "git",
@@ -28,12 +29,21 @@
     "dotenv": "^5.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-register": "^6.26.0",
     "chai": "^4.1.2",
     "eslint": "^4.18.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0",
     "mocha": "^5.0.1",
     "nodemon": "^1.15.1"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
   },
   "eslintConfig": {
     "extends": "airbnb-base"

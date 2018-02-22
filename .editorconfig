@@ -10,6 +10,6 @@ insert_final_newline = true
 charset = utf-8
 
 # JavaScript 2 space indentation
-[*.js]
+[*.{js,mjs}]
 indent_style = space
 indent_size = 2

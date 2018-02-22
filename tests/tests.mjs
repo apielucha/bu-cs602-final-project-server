@@ -1,6 +1,4 @@
-/* global describe, it */
-
-const { expect } = require('chai');
+import { expect } from 'chai';
 
 describe('Test', () => {
   it('Should be a number', () => {

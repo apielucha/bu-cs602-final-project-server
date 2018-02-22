@@ -1,0 +1,3 @@
+# ./node_modules/.bin/nodemon ./dist/app.js
+# ./node_modules/.bin/nodemon --experimental-modules ./src/app.mjs
+./node_modules/.bin/nodemon ./src/app.mjs --exec ./node_modules/.bin/babel-node
