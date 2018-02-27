@@ -1,6 +1,9 @@
 # Distribution files
 dist/
 
+# Uploaded files
+uploads/
+
 # Created by https://www.gitignore.io/api/node
 
 ### Node ###

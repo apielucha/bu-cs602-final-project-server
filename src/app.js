@@ -7,7 +7,7 @@ class App {
   static main() {
     App._init();
 
-    const server = new Server(8080);
+    const server = new Server(8081);
     server.run();
   }
 

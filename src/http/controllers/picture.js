@@ -1,0 +1,36 @@
+import PictureModel from '../../models/picture';
+
+class Picture {
+  static index(req, res) {
+    PictureModel.all((data) => {
+      res.status(200).json(data);
+    });
+  }
+
+  static store(req, res) {
+    const picture = req.body;
+    picture.url = `/render/${req.file.filename}`;
+
+    PictureModel.add(picture, (err) => {
+      if (err) {
+        res.status(400).json({
+          status: 400,
+          message: 'Picture couldn\'t be added to database.',
+          errors: err,
+        });
+      }
+
+      res.status(200).json({
+        status: 200,
+        message: 'Picture successfully added to database.',
+        data: picture,
+      });
+    });
+  }
+
+  static render(req, res) {
+    res.sendFile(`${process.env.ROOT_DIR}/uploads/${req.params.name}`);
+  }
+}
+
+export default Picture;
