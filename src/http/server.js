@@ -41,6 +41,7 @@ class Server {
   _routes() {
     this._app.get('/', HomeController.info(this));
     this._app.get('/test', HomeController.test);
+    this._app.post('/test', HomeController.postTest);
     // this._app.get('/test', Middlewares.verifyAuth, HomeController.test);
 
     this._app.post('/login', AuthController.login);

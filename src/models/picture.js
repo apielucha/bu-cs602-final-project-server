@@ -1,4 +1,5 @@
 import DB from './_db';
+import Validator from './_validator';
 
 class Picture {
   static all(callback) {
@@ -15,7 +16,10 @@ class Picture {
   }
 
   static add(picture, callback) {
-    const validationErrors = Picture._validate(picture);
+    const validationErrors = Validator.check(picture, {
+      url: 'string',
+      message: 'string',
+    });
 
     if (validationErrors.length) {
       callback(validationErrors);
@@ -30,21 +34,6 @@ class Picture {
           });
       });
     }
-  }
-
-  static _validate(picture) {
-    const errors = [];
-
-    const missing = key => `Key '${key}' is missing.`;
-    const wrongType = (key, type) => `Key '${key}' must be of type '${type}'.`;
-
-    if (!picture.url) { errors.push(missing('url')); }
-    if (typeof picture.url !== 'string') { errors.push(wrongType('url', 'string')); }
-
-    if (!picture.message) { errors.push(missing('message')); }
-    if (typeof picture.message !== 'string') { errors.push(wrongType('message', 'string')); }
-
-    return errors;
   }
 }
 

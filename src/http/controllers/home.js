@@ -1,3 +1,5 @@
+import User from '../../models/user';
+
 class Home {
   static info(server) {
     return (req, res) => {
@@ -10,10 +12,29 @@ class Home {
   }
 
   static test(req, res) {
-    res.json({
-      session: req.session,
+    User.all((data) => {
+      res.json(data);
     });
-    // TestModel.all(() => { res.end('http_ok 200'); });
+  }
+
+  static postTest(req, res) {
+    const user = req.body;
+
+    User.add(user, (err) => {
+      if (err) {
+        res.status(400).json({
+          status: 400,
+          message: 'User couldn\'t be added to database.',
+          errors: err,
+        });
+      } else {
+        res.status(200).json({
+          status: 200,
+          message: 'User successfully added to database.',
+          data: user,
+        });
+      }
+    });
   }
 }
 

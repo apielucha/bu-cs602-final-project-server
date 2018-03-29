@@ -18,13 +18,13 @@ class Picture {
           message: 'Picture couldn\'t be added to database.',
           errors: err,
         });
+      } else {
+        res.status(200).json({
+          status: 200,
+          message: 'Picture successfully added to database.',
+          data: picture,
+        });
       }
-
-      res.status(200).json({
-        status: 200,
-        message: 'Picture successfully added to database.',
-        data: picture,
-      });
     });
   }
 
