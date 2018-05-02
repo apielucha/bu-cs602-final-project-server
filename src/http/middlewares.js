@@ -13,9 +13,11 @@ class Middlewares {
     });
   }
 
-  static accessControlAllowOrigin(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
+  static accessControlAllowOrigin() {
+    return (req, res, next) => {
+      res.header('Access-Control-Allow-Origin', '*');
+      next();
+    };
   }
 
   static verifyAuth(req, res, next) {

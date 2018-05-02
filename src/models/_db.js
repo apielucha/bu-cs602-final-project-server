@@ -2,14 +2,15 @@ import { MongoClient } from 'mongodb';
 
 class DB {
   static execute(callback) {
-    const mongoIp = process.env.MONGO_SERVER_IP;
-    const mongoPort = process.env.MONGO_SERVER_PORT;
-    const mongoUrl = `mongodb://${mongoIp}:${mongoPort}/`;
+    const mongoUrl = 'mongodb://' +
+      `${process.env.MONGO_USER}:${process.env.MONGO_PWD}@` +
+      `${process.env.MONGO_IP}:${process.env.MONGO_PORT}` +
+      `/${process.env.MONGO_DB}`;
 
     MongoClient.connect(mongoUrl, (err, client) => {
       if (err) throw err;
 
-      const dbo = client.db('cs602-project');
+      const dbo = client.db(process.env.MONGO_DB);
       callback(dbo, () => { client.close(); });
     });
   }

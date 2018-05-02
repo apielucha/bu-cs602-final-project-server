@@ -1,14 +1,11 @@
 import User from '../../models/user';
 
 class Home {
-  static info(server) {
-    return (req, res) => {
-      res.status(200).json({
-        node: 'v8.9.1',
-        environment: process.env.NODE_ENV,
-        port: server._port,
-      });
-    };
+  static info(req, res) {
+    res.status(200).json({
+      node: 'v8.9.1',
+      environment: process.env.NODE_ENV,
+    });
   }
 
   static test(req, res) {

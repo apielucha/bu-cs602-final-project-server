@@ -1,26 +1,22 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import mime from 'mime';
 import morgan from 'morgan';
 import multer from 'multer';
-import randomstring from 'randomstring';
 
-import Middlewares from './middlewares';
-import HomeController from './controllers/home';
 import AuthController from './controllers/auth';
+import { File as FileHelper } from '../helpers';
+import HomeController from './controllers/home';
+import Middlewares from './middlewares';
 import PictureController from './controllers/picture';
 
 class Server {
-  constructor(port) {
+  constructor() {
     this._app = express();
-    this._port = port;
     this._upload = multer({
       storage: multer.diskStorage({
         destination: 'uploads/',
         filename: (req, file, callback) => {
-          const rand = randomstring.generate({ charset: 'hex' });
-          const extension = mime.getExtension(file.mimetype);
-          callback(null, `${rand}.${extension}`);
+          callback(null, new FileHelper(file).generateRandomName(16));
         },
       }),
     });
@@ -35,11 +31,11 @@ class Server {
     this._app.use(morgan('dev'));
 
     this._app.use(Middlewares.session());
-    this._app.use(Middlewares.accessControlAllowOrigin);
+    this._app.use(Middlewares.accessControlAllowOrigin());
   }
 
   _routes() {
-    this._app.get('/', HomeController.info(this));
+    this._app.get('/', HomeController.info);
     this._app.get('/test', HomeController.test);
     this._app.post('/test', HomeController.postTest);
     // this._app.get('/test', Middlewares.verifyAuth, HomeController.test);
@@ -53,10 +49,10 @@ class Server {
     this._app.get('/render/:name', PictureController.render);
   }
 
-  run() {
-    this._app.listen(this._port, () => {
+  run(port) {
+    this._app.listen(port, () => {
       /* eslint-disable-next-line no-console */
-      console.log(`App listening on localhost:${this._port}`);
+      console.log(`App listening on localhost:${port}`);
     });
   }
 }

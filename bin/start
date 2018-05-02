@@ -1,3 +1,1 @@
 node ./dist/app.js
-# node --experimental-modules ./src/app.mjs
-# ./node_modules/.bin/babel-node ./src/app.js
