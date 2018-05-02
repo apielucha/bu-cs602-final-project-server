@@ -2,7 +2,15 @@ import PictureModel from '../../models/picture';
 
 class Picture {
   static index(req, res) {
-    PictureModel.all((data) => {
+    const filters = {};
+
+    if (req.query) {
+      if (req.query.name) {
+        filters.title = new RegExp(req.query.name, 'i');
+      }
+    }
+
+    PictureModel.all(filters, (data) => {
       res.status(200).json(data);
     });
   }
@@ -22,7 +30,7 @@ class Picture {
         res.status(200).json({
           status: 200,
           message: 'Picture successfully added to database.',
-          data: picture,
+          uploaded: picture,
         });
       }
     });

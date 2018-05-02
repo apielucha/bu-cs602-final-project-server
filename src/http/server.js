@@ -43,9 +43,9 @@ class Server {
     this._app.post('/login', AuthController.login);
     this._app.get('/logout', AuthController.logout);
 
-    this._app.get('/images', PictureController.index);
+    this._app.get('/pictures', PictureController.index);
     // this._app.get('/', Middlewares.verifyAuth, PictureController.index);
-    this._app.post('/images', this._upload.single('test'), PictureController.store);
+    this._app.post('/pictures', this._upload.single('photo'), PictureController.store);
     this._app.get('/render/:name', PictureController.render);
   }
 

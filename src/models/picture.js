@@ -2,10 +2,11 @@ import DB from './_db';
 import Validator from './_validator';
 
 class Picture {
-  static all(callback) {
+  static all(filters, callback) {
     DB.execute((dbo, end) => {
       dbo.collection('pictures')
-        .find(/* { price: { $gte: 0, $lte: 10 } } */)
+        .find(filters)
+        .sort({ timestamp: -1 })
         .toArray((err, data) => {
           if (err) throw err;
 
@@ -18,15 +19,18 @@ class Picture {
   static add(picture, callback) {
     const validationErrors = Validator.check(picture, {
       url: 'string',
-      message: 'string',
+      title: 'string',
+      text: 'string',
     });
 
     if (validationErrors.length) {
       callback(validationErrors);
     } else {
+      const upload = { ...picture, timestamp: Date.now() };
+
       DB.execute((dbo, end) => {
         dbo.collection('pictures')
-          .insertOne(picture, (err) => {
+          .insertOne(upload, (err) => {
             if (err) throw err;
 
             end();
