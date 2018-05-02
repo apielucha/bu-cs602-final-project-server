@@ -22,19 +22,23 @@ class User {
       email: 'string',
       password: 'string',
     });
-    /* eslint-disable-next-line no-param-reassign */
-    user.fullname = `${user.firstname} ${user.lastname}`;
+
+    const upload = {
+      ...user,
+      fullname: `${user.firstname} ${user.lastname}`,
+      timestamp: Date.now(),
+    };
 
     if (validationErrors.length) {
       callback(validationErrors);
     } else {
       DB.execute((dbo, end) => {
         dbo.collection('users')
-          .insertOne(user, (err) => {
+          .insertOne(upload, (err) => {
             if (err) throw err;
 
             end();
-            callback();
+            callback(null, upload);
           });
       });
     }

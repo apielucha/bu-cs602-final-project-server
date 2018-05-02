@@ -1,38 +1,65 @@
-import User from '../../models/user';
+import UserModel from '../../models/user';
 
-class AuthController {
+class Auth {
+  static register(req, res) {
+    const user = req.body;
+
+    UserModel.add(user, (err, data) => {
+      if (err) {
+        res.status(400).json({
+          status: 400,
+          message: 'User couldn\'t be added to database.',
+          errors: err,
+        });
+      } else {
+        const { password, timestamp, ...secureUser } = data;
+
+        req.session.loggedIn = true;
+        req.session.user = secureUser;
+
+        res.status(200).json({
+          status: 200,
+          message: 'User successfully registered.',
+          data: secureUser,
+          sessionID: req.sessionID,
+        });
+      }
+    });
+  }
+
   static login(req, res) {
-    User.get(req.body.email, (data) => {
+    UserModel.get(req.body.email, (data) => {
       if (data === null || data.password !== req.body.password) {
         res.status(400).json({
           status: 400,
           message: 'Incorrect user or password.',
         });
       } else {
-        req.session.loggedIn = true;
-        req.session.user = { name: req.body.name };
+        const { password, timestamp, ...secureUser } = data;
 
-        res.status(302).setHeader('Location', `${process.env.GUI_URL}/`);
-        res.json({
-          status: 302,
-          message: 'Authenticated successfully. Redirecting to home page.',
-          user: req.session.user,
+        req.session.loggedIn = true;
+        req.session.user = secureUser;
+
+        res.status(200).json({
+          status: 200,
+          message: 'Authenticated successfully.',
+          user: secureUser,
+          sessionID: req.sessionID,
         });
       }
     });
   }
 
   static logout(req, res) {
-    delete req.session.loggedIn;
-    delete req.session.user;
+    req.session.destroy();
 
-    res.status(302).setHeader('Location', `${process.env.GUI_URL}/login`);
-    res.json({
-      status: 302,
-      message: 'Logged out successfully. Redirecting to login page.',
-      user: req.session.user,
+    // res.status(302).setHeader('Location', `${process.env.GUI_URL}/login`);
+    res.status(200).json({
+      status: 200,
+      message: 'Logged out successfully.',
+      sessionID: req.sessionID,
     });
   }
 }
 
-export default AuthController;
+export default Auth;

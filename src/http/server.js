@@ -38,8 +38,8 @@ class Server {
     this._app.get('/', HomeController.info);
     this._app.get('/test', HomeController.test);
     this._app.post('/test', HomeController.postTest);
-    // this._app.get('/test', Middlewares.verifyAuth, HomeController.test);
 
+    this._app.post('/register', AuthController.register);
     this._app.post('/login', AuthController.login);
     this._app.get('/logout', AuthController.logout);
 
