@@ -7,7 +7,10 @@ class App {
   static main() {
     App._init();
 
-    new Server().run(8081);
+    new Server(8081).run((message) => {
+      /* eslint-disable-next-line no-console */
+      console.log(message);
+    });
   }
 
   static _init() {

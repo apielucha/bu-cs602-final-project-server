@@ -1,21 +1,37 @@
 import expressSession from 'express-session';
 
 class Middlewares {
+  static httpsRedirect(port) {
+    return (req, res, next) => {
+      if (!req.secure) {
+        const host = req.headers.host.replace(port, port + 363);
+        const { url } = req;
+
+        res.redirect(`https://${host}${url}`);
+      } else {
+        next();
+      }
+    };
+  }
+
   static session() {
     return expressSession({
-      name: 'serverSession',
+      name: 'sessionID',
       secret: 'CS602proj3ct!',
       resave: false,
       saveUninitialized: false,
       cookie: {
         maxAge: 10 * 60 * 1000, // 10 minutes
+        secure: true,
+        httpOnly: true,
       },
     });
   }
 
-  static accessControlAllowOrigin() {
+  static CORS() {
     return (req, res, next) => {
-      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+      res.header('Access-Control-Allow-Credentials', 'true');
       next();
     };
   }

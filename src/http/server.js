@@ -1,5 +1,8 @@
 import bodyParser from 'body-parser';
 import express from 'express';
+import fs from 'fs';
+import http from 'http';
+import https from 'https';
 import morgan from 'morgan';
 import multer from 'multer';
 
@@ -10,8 +13,10 @@ import Middlewares from './middlewares';
 import PictureController from './controllers/picture';
 
 class Server {
-  constructor() {
+  constructor(port) {
     this._app = express();
+    this._port = port;
+
     this._upload = multer({
       storage: multer.diskStorage({
         destination: 'uploads/',
@@ -30,8 +35,9 @@ class Server {
     this._app.use(bodyParser.urlencoded({ extended: true }));
     this._app.use(morgan('dev'));
 
+    this._app.use(Middlewares.httpsRedirect(this._port));
     this._app.use(Middlewares.session());
-    this._app.use(Middlewares.accessControlAllowOrigin());
+    this._app.use(Middlewares.CORS());
   }
 
   _routes() {
@@ -51,11 +57,25 @@ class Server {
     this._app.get('/render/:name', PictureController.render);
   }
 
-  run(port) {
-    this._app.listen(port, () => {
-      /* eslint-disable-next-line no-console */
-      console.log(`App listening on localhost:${port}`);
-    });
+  run(callback) {
+    // this._app.listen(port, () => {
+    //   /* eslint-disable-next-line no-console */
+    //   console.log(`App listening on localhost:${port}`);
+    // });
+
+    const credentials = {
+      key: fs.readFileSync(`${process.env.ROOT_DIR}/ssl/server.key`),
+      cert: fs.readFileSync(`${process.env.ROOT_DIR}/ssl/server.crt`),
+    };
+
+    https.createServer(credentials, this._app).listen(
+      this._port + 363,
+      callback(`App listening on localhost:${this._port + 363}`),
+    );
+    http.createServer(this._app).listen(
+      this._port,
+      callback(`App listening on localhost:${this._port}`),
+    );
   }
 }
 
