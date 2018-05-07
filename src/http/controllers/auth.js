@@ -14,7 +14,7 @@ class Auth {
       } else {
         const { password, timestamp, ...secureUser } = data;
 
-        req.session.loggedIn = true;
+        req.session.isAuthenticated = true;
         req.session.user = secureUser;
 
         res.status(200).json({
@@ -37,7 +37,7 @@ class Auth {
       } else {
         const { password, timestamp, ...secureUser } = data;
 
-        req.session.loggedIn = true;
+        req.session.isAuthenticated = true;
         req.session.user = secureUser;
 
         res.status(200).json({
@@ -59,6 +59,10 @@ class Auth {
       message: 'Logged out successfully.',
       sessionID: req.sessionID,
     });
+  }
+
+  static testAuth(req, res) {
+    res.status(req.body.sessionID === req.sessionID ? 204 : 403).end();
   }
 }
 

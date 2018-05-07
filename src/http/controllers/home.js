@@ -9,9 +9,10 @@ class Home {
   }
 
   static test(req, res) {
-    User.all((data) => {
-      res.json(data);
-    });
+    // User.all((data) => {
+    //   res.json(data);
+    // });
+    res.json(req.sessionID);
   }
 
   static postTest(req, res) {

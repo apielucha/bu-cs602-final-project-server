@@ -15,9 +15,18 @@ class Picture {
     });
   }
 
+  static myPhotos(req, res) {
+    const filters = { author: req.session.user.fullname };
+
+    PictureModel.all(filters, (data) => {
+      res.status(200).json(data);
+    });
+  }
+
   static store(req, res) {
     const picture = req.body;
     picture.url = `/render/${req.file.filename}`;
+    picture.author = req.session.user.fullname;
 
     PictureModel.add(picture, (err) => {
       if (err) {
