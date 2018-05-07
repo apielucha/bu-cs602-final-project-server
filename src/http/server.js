@@ -48,7 +48,7 @@ class Server {
     this._app.post('/register', AuthController.register);
     this._app.post('/login', AuthController.login);
     this._app.get('/logout', AuthController.logout);
-    this._app.post('/testAuth', AuthController.testAuth);
+    this._app.get('/testAuth', AuthController.testAuth);
 
     this._app.get('/pictures', PictureController.index);
     this._app.get('/pictures/me', PictureController.myPhotos);
@@ -58,11 +58,6 @@ class Server {
   }
 
   run(callback) {
-    // this._app.listen(port, () => {
-    //   /* eslint-disable-next-line no-console */
-    //   console.log(`App listening on localhost:${port}`);
-    // });
-
     const credentials = {
       key: fs.readFileSync(`${process.env.ROOT_DIR}/ssl/server.key`),
       cert: fs.readFileSync(`${process.env.ROOT_DIR}/ssl/server.crt`),

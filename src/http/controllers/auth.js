@@ -62,7 +62,7 @@ class Auth {
   }
 
   static testAuth(req, res) {
-    res.status(req.body.sessionID === req.sessionID ? 204 : 403).end();
+    res.status(req.session.isAuthenticated ? 204 : 403).end();
   }
 }
 

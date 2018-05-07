@@ -30,7 +30,7 @@ class Middlewares {
 
   static CORS() {
     return (req, res, next) => {
-      res.header('Access-Control-Allow-Origin', 'http://localhost:8080');
+      res.header('Access-Control-Allow-Origin', 'https://localhost:8443');
       res.header('Access-Control-Allow-Credentials', 'true');
       next();
     };
