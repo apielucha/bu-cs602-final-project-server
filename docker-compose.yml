@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  server:
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "8081:8081"
+      - "8444:8444"
